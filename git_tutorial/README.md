@@ -14,8 +14,17 @@ xcode-select --install
 
 3. For other operating systems, following [these directions](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 
+##  Modify your global configurations
+Replace these details with your information and specify what you'd like your default text editor to be (e.g. sublime text, nano, vim)
+```bash
+git config --global --list
+git config --global user.name 'Dani Cosme'
+git config --global user.email 'dani.cosme@gmail.com'
+git config --global core.editor 'sublime'
+```
+
 ## Create an account on GitHub and join UO Data Science organization
-1. Go to [GitHub](https://github.com/) to create an account
+1. Go to [GitHub](https://github.com/join) to create an account
 2. Add your GitHub username to list on the [#bhg18-eugene Slack post](https://brainhack.slack.com/files/U2RKE3S1E/FAJ98A3AB/GitHub_Usernames) to be added to the organization
 3. Accept email invitation
 4. Go to the [Brainhack Eugene organization](https://github.com/brainhack-eugene)
@@ -23,6 +32,7 @@ xcode-select --install
 
 ## Why version control?
 * To have a backup
+* To see what has changed in the document over time
 * To be able to roll back to any previous version
 * To work collaboratively and avoid conflicted copies
 * To document your code and improve reproducibility
@@ -31,18 +41,28 @@ xcode-select --install
 
 <img src="http://www.phdcomics.com/comics/archive/phd101212s.gif" width="600">
 
-## Key concepts (Git 101)
+## What can be version controlled with git?
+* Plain text
+* Code
+* Git can't version control binary files (e.g. Word docs, images); it tracks that they've changed, but not what's different 
+
+## Key concepts and vocabulary
 * **Snapshots** = records what the files look like at a given point in time
   * You decide when to take snapshots
   * History of all snapshots is retained
+  * Analogy – they're kind of like photos
 * **Staging** = which files to include in the snapshot
   * You decide which files you want to take snapshots of
+  * Analogy – think of this step as deciding who's going to be in a group photo
 * **Commit** = the act of creating a snapshot
   * Info that's been changed
   * A reference to the commit that came brefore it (parent commit)
+  * Analogy – think of this step as actually taking the photo with only those you chose to be in it
 * **Repository** = collection of files and file history
 	* Local repository = exists only on your local machine
 	* Remote repository = exists on a remote website (e.g. github.com, gitlab.com, bitbucket.org)
+	* Also called a "repo" for short
+	* Analogy – this is kind of like the photo album that stores all your snapshots
 * **Cloning** = copying a repository
 * **Pulling** = grabbing changes from the original repository
 * **Pushing** = pushing changes to the original repository
@@ -92,19 +112,40 @@ printf "I <3 git" > test.txt
 ls 
 git status
 ```
-7. Add test.txt file to the repository
+7. Add test.txt file as a tracked file in the repository
 ```bash
 git add test.txt 
 ```
-8. Check status
+8. Check status and check what's different
+```bash
+git status
+git diff
+```
+9. Add a new line of text
+```bash
+printf "\nWhy hello there" >> test.txt
+```
+10. Check what's different
+```bash
+git diff test.txt
+```
+11. Check status again
 ```bash
 git status
 ```
-9. Save snapshot of repo by commiting changes
+12. Stage the changes made to the file
+```bash
+git add test.txt
+```
+13. Check status again
+```bash
+git status
+```
+14. Save snapshot of the file by commiting changes
 ```bash
 git commit -m "added test file"
 ```
-10. Check version history
+15. Check version history
 ```bash
 git log
 ```
@@ -116,6 +157,7 @@ git log
 
 1. Pull recent changes from remote repository
 	* Get most up to date version of the repository
+	* This will update your local files
 	* `git pull`
 2. Make changes to a file
 3. Stage the file 
@@ -125,22 +167,20 @@ git log
 	* Take a snapshot of the file
 	* `git commit -m "I made these changes.." [file]`
 5. Push changes to remote repository
-	* Apply your local changes to the repository
+	* Apply your local changes to the remote repository
 	* `git push`
 6. Rinse, repeat.
 
+## Tutorial
 ### Remote use
-1. Update global configurations
+1. If you have not already done so, clone open neuroscience workshop repository
 ```bash
-git config --global --list
-git config --global user.name 'Dani Cosme'
-git config --global user.email 'dani.cosme@gmail.com'
-git config --global core.editor 'sublime'
+cd ~/Desktop # or wherever you want this directory to be
+git clone https://github.com/brainhack-eugene/open_neuroscience_workshop.git
 ```
-2. Clone git-tutorial repo
+2. Change directories to the git tutorial folder
 ```bash
-cd ~/Desktop
-git clone https://github.com/uodatascience/git-tutorial.git
+cd open_neuroscience_workshop/git_tutorial
 ```
 3. Check status
 ```bash
@@ -150,42 +190,70 @@ git status
 ```bash
 git pull
 ```
-5. Open favs.txt file with text editor
+5. Change directories to the "brainhackers" folder and check what's in there
 ```bash
-# open in text editor app
-open /Applications/TextEdit.app favs.txt
-# open in terminal using vim
-vim favs.txt
+pwd # where am I?
+cd brainhackers
+ls
 ```
-6. Add your favorite R package and save file
+6. Read the instructions
 ```bash
-# add txt directly from command line
-printf "\ndplyr" >> favs.txt
+more instructions.md
 ```
-7. Add favs.txt to the staging area
+7. Follow the instructions
 ```bash
-git add favs.txt
-```
-8. Commit changes
-```bash
-git commit -m "added fav package"
-```
-9. Push changes to github repo
-```bash
-# single master branch
-git push
+# make a text file
+touch [myfile].txt
 
-# multiple branches
-git push origin [branch name]
+# add text
+printf "Super excited about BIDS apps" > [myfile].txt
+
+# check text
+more [myfile].txt
 ```
-10. Pull newest version from the github repo
+8. Check status
 ```bash
-# single master branch
+git status
+```
+9. Stage your text file
+```bash
+git add [myfile].txt
+```
+10. Commit changes
+```bash
+git commit -m "added my file"
+```
+11. Pull newest version from the github repo
+```bash
+# if single master branch
 git pull
 
-# multiple branches
+# if multiple branches
 git pull origin [branch name]
 ```
+12. Push changes to github repo
+```bash
+# if single master branch
+git push
+
+# if multiple branches
+git push origin [branch name]
+```
+
+## Ignoring files
+Sometimes you don't want git to track your files (e.g. if you have data or binary files in the repo). To ignore specific files, create a file called `.gitignore` and list the files you want to ignore.
+```bash
+# create .gitignore file
+touch .gitignore
+
+# add files to ignore
+printf ".DS_Store" > .gitignore
+```
+
+## Merge conflicts
+We're not going to go over merge conflicts in this tutorial, but they happen when two or more people change the file at the same time and the conflicts must be resolved.
+
+More information about how to deal with merge conflicts can be found on the [Software Carpentry tutorial](http://swcarpentry.github.io/git-novice/09-conflict/)
 
 ## Commonly used commands
 ```bash
@@ -202,10 +270,13 @@ git commit -m "[message text]"
 # copy existing repository
 git clone [repo address]
 
-# get newest version of repository
+# get newest version of remote repository
 git pull
 
-# push changes to repository
+# check newest version of remote repository without merging with your local repository
+git pull
+
+# push changes to remote repository
 git push
 
 # view history
