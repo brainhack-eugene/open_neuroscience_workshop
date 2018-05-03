@@ -78,7 +78,7 @@ ls
 
 5. Run the batch script. 
 
-  `python3 dcm2bids_batch.py`. 
+  `python3 dcm2bids_batch.py`  
 
 6. Check the niftis, output logs, and error logs.
 
