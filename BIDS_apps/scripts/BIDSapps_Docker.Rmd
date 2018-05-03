@@ -9,7 +9,7 @@ These scripts are also saved under 'open_neuroscience_workshop/BIDS_apps/scripts
 ### Download and install Docker for: [Mac](https://docs.docker.com/docker-for-mac/install/) [Windows](https://docs.docker.com/docker-for-windows/install/) [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
 More info about Docker can be found [here](https://neurohackweek.github.io/docker-for-scientists/)
-Increase Docker's memory useage: Preferences > Advanced > increase the memory limit to maximum > hit "Apply & Restart" 
+#####Increase Docker's memory useage: Preferences > Advanced > increase the memory limit to maximum > hit "Apply & Restart" 
 
 ### Running MRIQC locally using Docker
 ##### Download mriqc
