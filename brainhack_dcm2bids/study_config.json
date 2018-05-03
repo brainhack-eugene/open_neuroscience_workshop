@@ -1,0 +1,12 @@
+{
+    "descriptions": [
+        {
+            "dataType": "func",
+            "modalityLabel": "bold",
+            "customLabels": "task-rest",
+            "criteria": {
+                "SeriesDescription": "Resting_1"
+            }
+        }
+    ]
+}
