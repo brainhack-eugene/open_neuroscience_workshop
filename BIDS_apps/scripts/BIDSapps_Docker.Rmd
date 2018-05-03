@@ -21,8 +21,9 @@ docker pull poldracklab/mriqc:0.10.4
 ##### Run mriqc
 ```{r, engine = 'bash', eval = FALSE}
 
-inputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/'  #specify directory where bids formatted data lives
-outputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/derivatives/' #specify output (derivatives) directory
+repodir='[path to repo]' # e.g.  ~/Desktop/open_neuroscience_workshop
+inputdir=${repodir}/data/bids_data/  #specify directory where bids formatted data lives
+outputdir=${repodir}/data/bids_data/derivatives/ #specify output (derivatives) directory
 
 docker run --rm -it \  #run container, clean up after container exits, run in interactive mode
   -v ${inputdir}:/data:ro \ #-v gives docker access to the input directory. ro = read only
