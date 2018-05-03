@@ -1,0 +1,96 @@
+---
+title: "BIDS Apps"
+author: "Nandi Vijayakumar"
+date: "27 April 2018"
+output: html_document
+---
+
+### Running MRIQC on HPC using Singularity
+##### These scripts are saved under 'open_neuroscience_workshop/BIDS_apps/scripts/singularity/'
+##### You will need three scripts: download_container.sh, job_mriqc.sh and batch_mriqc.sh.
+##### You will also need a text file with the subject list with both ID and wave number: SID000,wave1
+
+##### download_container.sh
+```{r, engine = 'bash', eval = FALSE}
+#!/bin/bash
+
+#This script creates singulatiry containers for use on HPC. It needs to be run on a local machine (with Docker installed) and then transferred to HPC.
+
+outputdir='/path/to/save/container/'
+
+docker run --privileged -t --rm \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v ${outputdir}:/output \
+    singularityware/docker2singularity \
+    poldracklab/mriqc:latest \
+
+#This can take a while to download. Once completed, copy the container to HPC.
+
+```
+
+##### batch_mriqc.sh (parallelize mriqc across subjects)
+```{r, engine = 'bash', eval = FALSE}
+#!/bin/bash
+#
+# This batch file calls on your subject list (which contains both ID and wave number: SID000,wave1). 
+# And runs the job_mriqc.sh file for each subject. 
+# It saves the ouput and error files in specified directories.
+#
+# Set your directories
+
+container=/path/to/save/container/poldracklab_mriqc_latest-2017-10-19-8992ca9444b6.img
+study_dir=/path/to/study/folder/ #set path to directory within which study folder lives
+study="study_name" 
+
+# Set subject list
+SUBJLIST=`cat subject_list.txt`
+
+# Loop through subjects and run job_mriqc
+for SUBJ in $SUBJLIST; do
+
+SUBID=`echo $SUBJ|awk '{print $1}' FS=","`
+SESSID=`echo $SUBJ|awk '{print $2}' FS=","`
+  
+sbatch --export subid=${SUBID},sessid=${SESSID},study_dir=${study_dir},study=${study},container=${container} --job-name mriqc --partition=long -n16 --mem=75G --time=20:00:00 -o "${study_dir}"/"${study}"/scripts/singularity/output/"${SUBID}"_"${SESSID}"_mriqc_output.txt -e "${study_dir}"/"${study}"/scripts/singularity/output/"${SUBID}"_"${SESSID}"_mriqc_error.txt job_mriqc.sh
+
+	
+done
+```
+
+##### job_mriqc.sh (execute mriqc)
+```{r, engine = 'bash', eval = FALSE}
+#!/bin/bash
+
+# This script runs mriqc on subjects located in the BIDS directory 
+# and saves quality control outputs in the derivatives folder.
+
+# Set bids directories
+bids_dir="${study_dir}""${study}"/bids_data
+derivatives="${bids_dir}"/derivatives/mriqc
+working_dir="${derivatives}"/working
+image="${study_dir}""${container}"
+
+echo -e "\nMRIQC on ${subid}_${sessid}"
+echo -e "\nContainer: $image"
+echo -e "\nSubject directory: $bids_dir"
+
+# Load packages
+module load singularity
+
+# Create working directory
+mkdir -p $working_dir
+
+# Run container using singularity
+cd $bids_dir
+
+singularity run --bind "${study_dir}":"${study_dir}" $image $bids_dir $derivatives participant --participant_label $subid --session-id $sessid -w $working_dir --n_procs 16 --mem_gb 64
+
+echo -e "\n"
+echo -e "\ndone"
+echo -e "\n-----------------------"
+```
+
+##### Make sure job_mriqc.sh, batch_mriqc.sh and subject_list.txt are all in same folder. Then run batch script...
+```{r, engine = 'bash', eval = FALSE}
+sh batch_mriqc.sh
+```

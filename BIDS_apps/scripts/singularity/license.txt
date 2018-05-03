@@ -1,2 +1,1 @@
-nanditav@uoregon.edu
-...
+This file contains the FreeSurfer license info
