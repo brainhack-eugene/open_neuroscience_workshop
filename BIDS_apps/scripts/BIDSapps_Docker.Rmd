@@ -25,9 +25,12 @@ repodir='[path to repo]' # e.g.  ~/Desktop/open_neuroscience_workshop
 inputdir=${repodir}/data/bids_data/  #specify directory where bids formatted data lives
 outputdir=${repodir}/data/bids_data/derivatives/ #specify output (derivatives) directory
 
-docker run --rm -it \  #run container, clean up after container exits, run in interactive mode
-  -v ${inputdir}:/data:ro \ #-v gives docker access to the input directory. ro = read only
-  -v ${outputdir}:/out \  #tell docker where to populate output data.
-  poldracklab/mriqc:0.10.4 /data /out participant  #specify container image, input folder, output folder, run analyses on participant level
+docker run --rm -it -v ${inputdir}:/data:ro -v ${outputdir}:/out poldracklab/mriqc:0.10.4 /data /out participant
+    #this command will run container
+    #-rm will clean up after container exits
+    #-it will run in interactive mode
+    #-v gives docker access to the input directory
+    # ro = read only
+    #"poldracklab/mriqc:0.10.4 /data /out participant" specifies container image, input folder, output folder, and runs analyses on participant level
 
 ```
