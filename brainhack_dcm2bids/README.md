@@ -80,15 +80,15 @@ ls
 
   `python3 dcm2bids_batch.py`. 
 
-8. Check the niftis, output logs, and error logs.
+6. Check the niftis, output logs, and error logs.
 
 # Manually Create Metadata Files
 As per: [http://bids.neuroimaging.io/bids\_spec1.0.0-rc2.pdf](http://bids.neuroimaging.io/bids_spec1.0.0-rc2.pdf)
 
 For the purposes of the tutorial, these files have been created for you and are in `open_neuroscience_workshop/data/meta_data/` Place these files in the top level bids directory.
 
-* dataset_description.json
-* participants.tsv
+* `dataset_description.json`
+* `participants.tsv`
 * A JSON for each functional task with TaskName and RepetitionTime (created by the dcm2bids script & located in the subjects' `func`  folders. They can stay there.)
 
 ## Optional metadata
