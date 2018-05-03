@@ -132,13 +132,14 @@ $(document).ready(function () {
 <h5>Download mriqc</h5>
 <pre class="bash"><code>
 docker pull poldracklab/mriqc:0.10.4
-    #pull image from Docker Hub registry</code></pre>
+    #pull image from Docker Hub registry
+    #saves image within the depths of Docker (not to the location you downloaded it from)</code></pre>
 </div>
 <div id="run-mriqc" class="section level5">
 <h5>Run mriqc</h5>
 <pre class="bash"><code>
-inputdir = '/path/to/input/'  #specify directory where bids formatted data lives
-outputdir = '/path/to/input/' #specify output (derivatives) directory
+inputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/'  #specify directory where bids formatted data lives
+outputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/derivatives/' #specify output (derivatives) directory
 
 docker run --rm -it \  
     #run container, clean up after container exits, run in interactive mode
@@ -159,7 +160,7 @@ docker run --rm -it \
 
 #This script creates singulatiry containers for use on HPC. It needs to be run on a local machine (with Docker installed) and then transferred to HPC.
 
-outputdir='/Volumes/psych-cog/dsnlab/BIDS/SingularityContainers'
+outputdir='/path/to/save/container/'
 
 docker run --privileged -t --rm \
     -v /var/run/docker.sock:/var/run/docker.sock \
@@ -178,9 +179,9 @@ docker run --privileged -t --rm \
 #
 # Set your directories
 
-group_dir=/projects/dsnlab/shared/
-container=BIDS/SingularityContainers/poldracklab_mriqc_latest-2017-10-19-8992ca9444b6.img
-study=&quot;tag&quot;
+container=/path/to/save/container/poldracklab_mriqc_latest-2017-10-19-8992ca9444b6.img
+study_dir=/path/to/study/folder/ #set path to directory within which study folder lives
+study=&quot;study_name&quot; 
 
 # Set subject list
 SUBJLIST=`cat subject_list.txt`
@@ -191,7 +192,7 @@ for SUBJ in $SUBJLIST; do
 SUBID=`echo $SUBJ|awk '{print $1}' FS=&quot;,&quot;`
 SESSID=`echo $SUBJ|awk '{print $2}' FS=&quot;,&quot;`
   
-sbatch --export subid=${SUBID},sessid=${SESSID},group_dir=${group_dir},study=${study},container=${container} --job-name mriqc --partition=long -n16 --mem=75G --time=20:00:00 -o &quot;${group_dir}&quot;/&quot;${study}&quot;/TAG_scripts/fMRI/ppc/output/&quot;${SUBID}&quot;_&quot;${SESSID}&quot;_mriqc_output.txt -e &quot;${group_dir}&quot;/&quot;${study}&quot;/TAG_scripts/fMRI/ppc/output/&quot;${SUBID}&quot;_&quot;${SESSID}&quot;_mriqc_error.txt job_mriqc.sh
+sbatch --export subid=${SUBID},sessid=${SESSID},study_dir=${study_dir},study=${study},container=${container} --job-name mriqc --partition=long -n16 --mem=75G --time=20:00:00 -o &quot;${study_dir}&quot;/&quot;${study}&quot;/TAG_scripts/fMRI/ppc/output/&quot;${SUBID}&quot;_&quot;${SESSID}&quot;_mriqc_output.txt -e &quot;${study_dir}&quot;/&quot;${study}&quot;/TAG_scripts/fMRI/ppc/output/&quot;${SUBID}&quot;_&quot;${SESSID}&quot;_mriqc_error.txt job_mriqc.sh
     
 done</code></pre>
 </div>
@@ -203,10 +204,10 @@ done</code></pre>
 # and saves quality control outputs in the derivatives folder.
 
 # Set bids directories
-bids_dir=&quot;${group_dir}&quot;&quot;${study}&quot;/bids_data
+bids_dir=&quot;${study_dir}&quot;&quot;${study}&quot;/bids_data
 derivatives=&quot;${bids_dir}&quot;/derivatives/mriqc
 working_dir=&quot;${derivatives}&quot;/working
-image=&quot;${group_dir}&quot;&quot;${container}&quot;
+image=&quot;${study_dir}&quot;&quot;${container}&quot;
 
 echo -e &quot;\nMRIQC on ${subid}_${sessid}&quot;
 echo -e &quot;\nContainer: $image&quot;
@@ -221,7 +222,7 @@ mkdir -p $working_dir
 # Run container using singularity
 cd $bids_dir
 
-singularity run --bind &quot;${group_dir}&quot;:&quot;${group_dir}&quot; $image $bids_dir $derivatives participant --participant_label $subid --session-id $sessid -w $working_dir --n_procs 16 --mem_gb 64
+singularity run --bind &quot;${study_dir}&quot;:&quot;${study_dir}&quot; $image $bids_dir $derivatives participant --participant_label $subid --session-id $sessid -w $working_dir --n_procs 16 --mem_gb 64
 
 echo -e &quot;\n&quot;
 echo -e &quot;\ndone&quot;
@@ -242,8 +243,8 @@ echo -e &quot;\n-----------------------&quot;</code></pre>
 </div>
 <div id="run-fmriprep" class="section level5">
 <h5>Run fmriprep</h5>
-<pre class="bash"><code>inputdir = '/path/to/input/'  #specify directory where bids formatted data lives
-outputdir = '/path/to/input/' #specify output (derivatives) directory
+<pre class="bash"><code>inputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/'  #specify directory where bids formatted data lives
+outputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/derivatives/' #specify output (derivatives) directory
 
 docker run --rm -it \  
       #run container, clean up after container exits, run in interactive mode
@@ -256,8 +257,8 @@ docker run --rm -it \
 </div>
 <div id="run-fmriprep-1" class="section level5">
 <h5>Run fmriprep</h5>
-<pre class="bash"><code>inputdir = '/path/to/input/'  
-outputdir = '/path/to/input/' 
+<pre class="bash"><code>inputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/'  
+outputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/derivatives/' 
 
 docker run --rm -it \  
   -v ${inputdir}:/data:ro \  
@@ -266,8 +267,8 @@ docker run --rm -it \
 </div>
 <div id="run-fmriprep-without-fieldmaps-and-produce-pre-processed-images-in-subject-specific-surface-space" class="section level5">
 <h5>Run fmriprep without fieldmaps and produce pre-processed images in subject-specific surface space</h5>
-<pre class="bash"><code>inputdir = '/path/to/input/'  
-outputdir = '/path/to/input/' 
+<pre class="bash"><code>inputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/'
+outputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/derivatives/' 
 
 docker run --rm -it \  
   -v ${inputdir}:/data:ro \  
