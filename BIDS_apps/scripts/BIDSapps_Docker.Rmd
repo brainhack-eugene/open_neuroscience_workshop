@@ -4,11 +4,8 @@ author: "Nandi"
 date: "2 May 2018"
 output: html_document
 ---
-### Download and install [Docker](https://neurohackweek.github.io/docker-for-scientists/)
-#### [Mac](https://docs.docker.com/docker-for-mac/install/)
-#### [Windows](https://docs.docker.com/docker-for-windows/install/)
-#### [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
-#### Increase Docker's memory useage: Preferences > Advanced > increase the memory limit to maximum > hit "Apply & Restart" 
+### Download and install [Docker](https://neurohackweek.github.io/docker-for-scientists/) [Mac](https://docs.docker.com/docker-for-mac/install/) [Windows](https://docs.docker.com/docker-for-windows/install/) [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+##### Increase Docker's memory useage: Preferences > Advanced > increase the memory limit to maximum > hit "Apply & Restart" 
 
 ### Running MRIQC locally using Docker
 ##### Download mriqc
@@ -35,5 +32,3 @@ docker run --rm -it \
     #specify container image, input folder, output folder, run analyses on participant level
 
 ```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
