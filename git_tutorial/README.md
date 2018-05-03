@@ -178,14 +178,9 @@ git log
 cd ~/Desktop # or wherever you want this directory to be
 git clone https://github.com/brainhack-eugene/open_neuroscience_workshop.git
 ```
-2. If you have already cloned the repo, change directories into your local repo and pull the most recent changes from the remote repo
-```
-cd open_neuroscience_workshop
-git pull
-```
-3. Change directories to the git tutorial folder
+2. Change directories to the git tutorial folder
 ```bash
-cd git_tutorial
+cd open_neuroscience_workshop/git_tutorial
 ```
 3. Check status
 ```bash
@@ -268,6 +263,9 @@ git init
 # add file(s) 
 git add [file]  # single file
 git add .       # all files
+
+# remove file tracking
+git rm
 
 # make a snapshot of repository
 git commit -m "[message text]"
