@@ -8,7 +8,7 @@ def main():
     """
     Run the things.
     """
-    folders_tocheck = cfg.niidir, cfg.logdir, cfg.logdir
+    folders_tocheck = cfg.niidir, cfg.logdir
     check_dirs(folders_tocheck)
     logfile_fullpaths = cfg.errorlog, cfg.outputlog
     create_logfiles(logfile_fullpaths)
