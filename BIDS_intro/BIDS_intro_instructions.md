@@ -18,13 +18,8 @@ If you have not already, install the following:
     - Recent release
     - github to build from source code
 
-## Clone the kdestasio dcm2bids repo
 
-```
-git clone https://github.com/kdestasio/dcm2bids.git
-```
-
-We will follow the instructions in the README of this repo (also available if you follow the [link](https://github.com/kdestasio/dcm2bids)) to convert our tutorial data from DICOMS to Niftis and put them into BIDS.  
+To convert our tutorial data from DICOMS to Niftis and put them into BIDS, we will follow the instructions in the README found in the open_neuroscience_workshop/brainhack_dcm2bids folder.  
 
 Generally speaking, the steps are:  
 
