@@ -1,0 +1,39 @@
+---
+title: "BIDSapps_Docker"
+author: "Nandi"
+date: "2 May 2018"
+output: html_document
+---
+### Download and install [Docker](https://neurohackweek.github.io/docker-for-scientists/)
+#### [Mac](https://docs.docker.com/docker-for-mac/install/)
+#### [Windows](https://docs.docker.com/docker-for-windows/install/)
+#### [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
+#### Increase Docker's memory useage: Preferences > Advanced > increase the memory limit to maximum > hit "Apply & Restart" 
+
+### Running MRIQC locally using Docker
+##### Download mriqc
+```{r, engine = 'bash', eval = FALSE}
+
+docker pull poldracklab/mriqc:0.10.4
+    #pull image from Docker Hub registry
+    #saves image within the depths of Docker (not to the location you downloaded it from)
+```
+
+##### Run mriqc
+```{r, engine = 'bash', eval = FALSE}
+
+inputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/'  #specify directory where bids formatted data lives
+outputdir = '/path_to_repo/open_neuroscience_workshop/data/bids_dir/derivatives/' #specify output (derivatives) directory
+
+docker run --rm -it \  
+    #run container, clean up after container exits, run in interactive mode
+  -v ${inputdir}:/data:ro \ 
+    #-v gives docker access to the input directory. ro = read only
+  -v ${outputdir}:/out \  
+    #tell docker where to populate output data.
+  poldracklab/mriqc:0.10.4 /data /out participant  
+    #specify container image, input folder, output folder, run analyses on participant level
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
