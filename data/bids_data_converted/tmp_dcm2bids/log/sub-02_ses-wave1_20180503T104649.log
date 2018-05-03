@@ -1,0 +1,57 @@
+--- dcm2bids start ---
+subprocess: dcm2niix
+
+Compression will be faster with 'pigz' installed http://macappstore.org/pigz/
+Chris Rorden's dcm2niiX version v1.0.20180328 Clang9.0.0 (64-bit MacOS)
+usage: dcm2niix [options] <in_folder>
+ Options :
+  -1..-9 : gz compression level (1=fastest..9=smallest, default 6)
+  -b : BIDS sidecar (y/n/o [o=only: no NIfTI], default y)
+   -ba : anonymize BIDS (y/n, default y)
+  -c : comment stored as NIfTI aux_file (up to 24 characters)
+  -f : filename (%a=antenna  (coil) number, %c=comments, %d=description, %e=echo number, %f=folder name, %i=ID of patient, %j=seriesInstanceUID, %k=studyInstanceUID, %m=manufacturer, %n=name of patient, %p=protocol, %s=series number, %t=time, %u=acquisition number, %v=vendor, %x=study ID; %z=sequence name; default '%f_%p_%t_%s')
+  -g : generate defaults file (y/n/o [o=only: reset and write defaults], default n)
+  -h : show help
+  -i : ignore derived, localizer and 2D images (y/n, default n)
+  -m : merge 2D slices from same series regardless of study time, echo, coil, orientation, etc. (y/n, default n)
+  -n : only convert this series number - can be used up to 16 times (default convert all)
+  -o : output directory (omit to save to input folder)
+  -p : Philips precise float (not display) scaling (y/n, default y)
+  -s : single file mode, do not convert other images in folder (y/n, default n)
+  -t : text notes includes private patient details (y/n, default n)
+  -u : up-to-date check
+  -v : verbose (n/y or 0/1/2 [no, yes, logorrheic], default 0)
+  -x : crop (y/n, default n)
+  -z : gz compress images (y/i/n/3, default n) [y=pigz, i=internal, n=no, 3=no,3D]
+ Defaults file : /Users/danicosme/.dcm2nii.ini
+ Examples :
+  dcm2niix /Users/chris/dir
+  dcm2niix -c "my comment" /Users/chris/dir
+  dcm2niix -o /users/cr/outdir/ -z y ~/dicomdir
+  dcm2niix -f %p_%s -b y -ba n ~/dicomdir
+  dcm2niix -f mystudy%s ~/dicomdir
+  dcm2niix -o "~/dir with spaces/dir" ~/dicomdir
+
+dcm2niix:version: b'v1.0.20180328'
+participant: 02
+session: wave1
+config: /Users/danicosme/Documents/code/brainhack/open_neuroscience_workshop/brainhack_dcm2bids/study_config.json
+BIDS directory: /Users/danicosme/Documents/code/brainhack/open_neuroscience_workshop/data/bids_data
+
+--- running dcm2niix ---
+subprocess: dcm2niix -b y -ba y -z y -f '%3s_%f_%p_%t' -o /Users/danicosme/Documents/code/brainhack/open_neuroscience_workshop/data/bids_data/tmp_dcm2bids/sub-02_ses-wave1 /Users/danicosme/Documents/code/brainhack/open_neuroscience_workshop/data/dicoms/S002
+
+Compression will be faster with 'pigz' installed http://macappstore.org/pigz/
+Chris Rorden's dcm2niiX version v1.0.20180328 Clang9.0.0 (64-bit MacOS)
+Found 50 DICOM image(s)
+slices stacked despite varying acquisition numbers (if this is not desired please recompile)
+Convert 50 DICOM as /Users/danicosme/Documents/code/brainhack/open_neuroscience_workshop/data/bids_data/tmp_dcm2bids/sub-02_ses-wave1/008_S002_Resting_1_20160209165824 (84x84x60x50)
+Conversion required 8.506725 seconds (3.585292 for core code).
+
+
+Sidecars matching:
+MATCH           008_S002_Resting_1_20160209165824.json
+
+Checking if a description matches several sidecars ...
+
+moving acquisitions into BIDS output directory
