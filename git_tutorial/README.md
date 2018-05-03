@@ -23,7 +23,7 @@ git config --global user.email 'dani.cosme@gmail.com'
 git config --global core.editor 'sublime'
 ```
 
-## Create an account on GitHub and join UO Data Science organization
+## Create an account on GitHub and join Brainhack Eugene organization
 1. Go to [GitHub](https://github.com/join) to create an account
 2. Add your GitHub username to list on the [#bhg18-eugene Slack post](https://brainhack.slack.com/files/U2RKE3S1E/FAJ98A3AB/GitHub_Usernames) to be added to the organization
 3. Accept email invitation
@@ -47,13 +47,13 @@ git config --global core.editor 'sublime'
 * Git can't version control binary files (e.g. Word docs, images); it tracks that they've changed, but not what's different 
 
 ## Key concepts and vocabulary
-* **Snapshots** = records what the files look like at a given point in time
+* **Snapshots** = records of what files look like at a given point in time
   * You decide when to take snapshots
   * History of all snapshots is retained
   * Analogy – they're kind of like photos
 * **Staging** = which files to include in the snapshot
   * You decide which files you want to take snapshots of
-  * Analogy – think of this step as deciding who's going to be in a group photo
+  * Analogy – think of this step as deciding who's going to be in a group photo; you may want to include some people, but not others
 * **Commit** = the act of creating a snapshot
   * Info that's been changed
   * A reference to the commit that came brefore it (parent commit)
@@ -64,8 +64,8 @@ git config --global core.editor 'sublime'
 	* Also called a "repo" for short
 	* Analogy – this is kind of like the photo album that stores all your snapshots
 * **Cloning** = copying a repository
-* **Pulling** = grabbing changes from the original repository
-* **Pushing** = pushing changes to the original repository
+* **Pulling** = grabbing changes from a remote repository
+* **Pushing** = pushing changes to a remote repository
 * **Branches** = offshoots of the master branch
   * Master = typically the main branch
 * **Merging** = combining branch with master repository
@@ -99,15 +99,15 @@ git init
 ```bash
 ls -a
 ```
-4. Get status
+4. Check status
 ```bash
 git status
 ```
-5. Create file
+5. Create file with some text
 ```bash
 printf "I <3 git" > test.txt
 ```
-6. Check status
+6. List files and check status
 ```bash
 ls 
 git status
@@ -173,14 +173,19 @@ git log
 
 ## Tutorial
 ### Remote use
-1. If you have not already done so, clone open neuroscience workshop repository
+1. If you have not already done so, clone open neuroscience workshop repository. This might take a while because the data files are quite large.
 ```bash
 cd ~/Desktop # or wherever you want this directory to be
 git clone https://github.com/brainhack-eugene/open_neuroscience_workshop.git
 ```
-2. Change directories to the git tutorial folder
+2. If you have already cloned the repo, change directories into your local repo and pull the most recent changes from the remote repo
+```
+cd open_neuroscience_workshop
+git pull
+```
+3. Change directories to the git tutorial folder
 ```bash
-cd open_neuroscience_workshop/git_tutorial
+cd git_tutorial
 ```
 3. Check status
 ```bash
