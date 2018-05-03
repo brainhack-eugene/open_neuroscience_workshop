@@ -7,7 +7,7 @@ def main():
     """
     Run the things.
     """
-    dir_fullpaths = cfg.logdir, cfg.archivedir, cfg.niidir
+    dir_fullpaths = cfg.logdir, cfg.niidir
     check_dirs_make(dir_fullpaths)
     logfile_fullpaths = cfg.outputlog, cfg.errorlog
     create_logfiles(logfile_fullpaths)
@@ -16,8 +16,10 @@ def main():
     if os.path.isdir(cfg.dicomdir):
         write_to_outputlog(cfg.test_subject + os.linesep)
         # Create a job to submit to the HPC with sbatch
-        cmd = 'module load singularity; sbatch --job-name helper_{test_subject} --partition=short --time 00:60:00 --mem-per-cpu=2G --cpus-per-task=1 -o {logdir}/{test_subject}_helper_output.txt -e {logdir}/{test_subject}_helper_error.txt --wrap="singularity exec -B {dicomdir} -B /projects/{group}/shared/{study} {image} dcm2bids_helper -d {dicomdir}/{test_subject} -o /projects/{group}/shared/{study}"'.format(dicomdir=cfg.dicomdir, test_subject=cfg.test_subject, niidir=cfg.niidir, group=cfg.group, image=cfg.singularity_image, study=cfg.study, logdir=cfg.logdir)
-        # Submit the job
+        if cfg.run_local:
+            cmd = 'dcm2bids_helper -d {dicomdir}/{test_subject} -o {niidir}'.format(dicomdir=cfg.dicomdir, test_subject=cfg.test_subject, niidir=cfg.niidir)
+        else:
+            cmd = 'module load singularity; sbatch --job-name helper_{test_subject} --partition=short --time 00:60:00 --mem-per-cpu=2G --cpus-per-task=1 -o {logdir}/{test_subject}_helper_output.txt -e {logdir}/{test_subject}_helper_error.txt --wrap="singularity exec -B {dicomdir} -B /projects/{group}/shared/{study} {image} dcm2bids_helper -d {dicomdir}/{test_subject} -o /projects/{group}/shared/{study}"'.format(dicomdir=cfg.dicomdir, test_subject=cfg.test_subject, niidir=cfg.niidir, group=cfg.group, image=cfg.singularity_image, study=cfg.study, logdir=cfg.logdir)
         subprocess.call([cmd], shell=True)
     else:
         write_to_errorlog(cfg.test_subject+os.linesep)
