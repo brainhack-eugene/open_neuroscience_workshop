@@ -4,6 +4,8 @@ author: "Nandi"
 date: "2 May 2018"
 output: html_document
 ---
+These scripts are also saved under 'open_neuroscience_workshop/BIDS_apps/scripts/docker/'
+
 ### Download and install Docker for: [Mac](https://docs.docker.com/docker-for-mac/install/) [Windows](https://docs.docker.com/docker-for-windows/install/) [Linux](https://docs.docker.com/install/linux/docker-ce/ubuntu/)
 
 ##### More info about Docker can be found [here](https://neurohackweek.github.io/docker-for-scientists/)
