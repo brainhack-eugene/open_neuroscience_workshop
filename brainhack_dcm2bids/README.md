@@ -96,4 +96,6 @@ For the purposes of the tutorial, these files have been created for you and are 
 * CHANGES (optional, but strongly recommended)
 
 # Check the BIDS Conversion
-BIDS validator: [http://incf.github.io/bids-validator](http://incf.github.io/bids-validator/)
+BIDS validator - html tool: [http://incf.github.io/bids-validator/](http://incf.github.io/bids-validator/)
+BIDS validator command line tool: [http://incf.github.io/bids-validator](http://incf.github.io/bids-validator/)
+
