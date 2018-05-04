@@ -1,13 +1,13 @@
 # Docker Intro
 
-<img src="https://hackernoon.com/top-10-docker-commands-you-cant-live-without-54fb6377f481" width="600">
+<img src="https://cdn-images-1.medium.com/max/1600/1*126sHZF_Xo8TVuk6ybWnlA.png" width="600">
 
 ## What is Docker?
 A platform for storing, sharing, and running virtual environments housed within containers. 
 
 Sort of like a virtual machine, but different. 
 
-<img src="https://www.zdnet.com/article/what-is-docker-and-why-is-it-so-darn-popular/" width="600">
+<img src="https://zdnet2.cbsistatic.com/hub/i/r/2017/05/08/af178c5a-64dd-4900-8447-3abd739757e3/resize/770xauto/78abd09a8d41c182a28118ac0465c914/docker-vm-container.png" width="600">
 
 [Image from ZD Net](https://www.zdnet.com/article/what-is-docker-and-why-is-it-so-darn-popular/)
 
