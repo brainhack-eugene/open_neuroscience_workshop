@@ -277,7 +277,7 @@ git clone [repo address]
 git pull
 
 # check newest version of remote repository without merging with your local repository
-git pull
+git fetch
 
 # push changes to remote repository
 git push
